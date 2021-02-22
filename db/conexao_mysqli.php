@@ -1,6 +1,6 @@
 <?php
     // ----------------------------------------------------------------
-    // Conexão inicial com banco de dados com PHP e MySQL via PDO
+    // Conexão inicial com banco de dados com PHP e MySQL via MySQLi
     // 
     // por Lucas Gomes
     // criado em 22/fevereiro/2021
@@ -12,12 +12,11 @@
         $usuario = 'USUARIO';
         $senha = 'SENHA';
 
-        try {
-            $conexao = new PDO("mysql:host=$servidor; dbname=$banco", $usuario, $senha);
-            return $conexao;
-        } catch(PDOException $erro) {
-            die('Erro: ' . $erro->getMessage());
-        }
-    }
+        $conexao = new mysqli($servidor, $usuario, $senha, $banco);
 
-    novaConexao();
+        if($conexao->connect_error) {
+            die('Erro: '. $conexao->connect_error);
+        }
+
+        return $conexao;
+    }
